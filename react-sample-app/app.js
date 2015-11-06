@@ -27,6 +27,9 @@ sampleApp.controller('FriendListController', function($scope) {
                          {name:"Nimesh Pathirana",status:"ACTIVE"},
                          {name:"Sajith Vijesekara",status:"OFF_LINE"},
                          {name:"Buddika Umesh",status:"ACTIVE"},
+                         {name:"User 5",status:"ACTIVE"},
+                         {name:"User 6",status:"OFF_LINE"},
+                         {name:"User 7",status:"ACTIVE"}
                          ];    
 });
 sampleApp.controller('LoginController', function($scope) {
