@@ -22,7 +22,12 @@ sampleApp.config(['$routeProvider',
 
 
 sampleApp.controller('FriendListController', function($scope) {    
-    $scope.message = 'This is Add new order screen';    
+    $scope.message = 'This is Add new order screen';
+    $scope.friend_list =[
+                         {name:"Nimesh Pathirana",status:"ACTIVE"},
+                         {name:"Sajith Vijesekara",status:"OFF_LINE"},
+                         {name:"Buddika Umesh",status:"ACTIVE"},
+                         ];    
 });
 sampleApp.controller('LoginController', function($scope) {
     $scope.message = 'This is Show orders screen';
