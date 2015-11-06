@@ -146,56 +146,6 @@ p {
     color: #fff;
 }
 
-/* login-form-center */
-
-.col-center-block {
-    float: none;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 0;
-    -webkit-appearance: none;
-}
-
-/* fotter */
-.footer {
-    color: #fff;
-    font-size: 12px;
-    background-color: #b2b2b2;
-}
-
-.footer span, footer span:hover {
-    color: #127557;
-    text-decoration: none;
-}
-
-/* DASHBOARD ICONS */
-
-.user-applications-run {
-    background-color: #8a5d62;
-    height: 200px;
-    padding: 15px;
-}
-
-.status-applications {
-    background-color: #5b739e;
-    height: 200px;
-    padding: 15px;
-}
-
-/* remove radius */
-
-body {
-    margin-top: 100px;
-    background-color: #EEEEEE;
-}
-
-@media (min-width: 768px) {
-    body {
-        margin-top: 50px;
-    }
-}
-
 #wrapper {
     padding-left: 0;
 }
@@ -226,7 +176,7 @@ body {
 /* Top Navigation */
 
 .top-nav {
-    padding: 0 15px;
+    padding: 0 0px;
     background-color: #222 !important;
 }
 
@@ -236,7 +186,7 @@ body {
 }
 
 .top-nav > li > a {
-    padding-top: 15px;
+    padding-top: 5px;
     padding-bottom: 15px;
     line-height: 20px;
     color: #999;
@@ -591,4 +541,9 @@ table#sourceTable tbody  tr {
     padding: 0;
     background-color: #fff;
     margin:0 auto;
+}
+/* Google Map */
+#map {
+    height: 500px;
+    width: 500px;
 }
