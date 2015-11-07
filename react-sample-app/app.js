@@ -15,7 +15,7 @@ sampleApp.config(['$routeProvider',
     templateUrl: 'pages/register.html',
     controller: 'RegisterController'
       }).
-      when('/register', {
+      when('/chat', {
     templateUrl: 'pages/chat.html',
     controller: 'ChatController'
       }).
