@@ -15,6 +15,10 @@ sampleApp.config(['$routeProvider',
     templateUrl: 'pages/register.html',
     controller: 'RegisterController'
       }).
+      when('/register', {
+    templateUrl: 'pages/chat.html',
+    controller: 'ChatController'
+      }).
       otherwise({
     redirectTo: '/list'
       });
@@ -36,5 +40,8 @@ sampleApp.controller('LoginController', function($scope) {
     $scope.message = 'This is Show orders screen';
 });
 sampleApp.controller('RegisterController', function($scope) {
+    $scope.message = 'This is Show orders screen';
+});
+sampleApp.controller('ChatController', function($scope) {
     $scope.message = 'This is Show orders screen';
 });
