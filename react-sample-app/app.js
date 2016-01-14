@@ -106,8 +106,24 @@ sampleApp.controller('RegisterController', function ($scope) {
     $scope.message = 'This is Show orders screen';
 });
 
-sampleApp.controller('ProductsController', function ($scope) {
-    $scope.message = 'This is Products List';
+sampleApp.controller('ProductsController', function ($scope, $http) {
+    var URL = "http://localhost:9090/api/products";
+    var config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    $http.get(URL, config)
+        .success(function (data, status, headers, config) {
+            console.log("Http Status : " + status);
+            console.log("Data : " + data);
+            $scope.product_list = data.product;
+        })
+        .error(function (data, status, header, config) {
+            console.log("Failed to login");
+            $scope.Response = data.Status + " : Status Code : " + status + "  Please Login Again";
+        });
+
 });
 sampleApp.controller('ChatController', function ($scope, $http, $location, $routeParams) {
     $scope.message = 'This is Show orders screen';

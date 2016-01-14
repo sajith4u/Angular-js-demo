@@ -1,5 +1,26 @@
 <div ng-app="sampleApp" ng-controller="ProductsController">
-    <div id="page-wrapper">
-        {{message}}
+    <div id="container">
+        <div class="row" style="margin-left: 2%;margin-right: 2%">
+            <ul class="list-group" ng-repeat="product in product_list">
+                <div class="col-sm-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">
+                            <h3 class="panel-title">{{product.name}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <img src="http://por-img.cimcontent.net/cms/data/assets/bin-201408/ae2207c8b803359b0420e03052cce5cd_600x400.jpg"
+                                 class="img-rounded"
+                                 alt="Product Name"
+                                 width="150"
+                                 height="150">
+
+                            <p>{{product.price}}</p>
+
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+
     </div>
 </div>
