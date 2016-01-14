@@ -1,26 +1,35 @@
+<div ng-app="sampleApp" ng-controller="FriendListController">
+    <div class="row">
+        <div class="col-sm-4">
+            <button class="btn btn-warning btn-sm" id="friendList" ng-click="getFriendList()">
+                Friend's
+            </button>
+            {{Response}}
+            <!--<ul class="list-group" ng-repeat="friend in friend_list">
+                <div ng-show="friend_list.length !== 0">
+                    <a href="#chat/">
+                        <li class="list-group-item"><span class="badge">{{friend.status}}</span>{{friend.name}}</li>
+                    </a>
+                </div>
+            </ul>-->
 
-<div class="row">
-  <div class="col-sm-4">
-  	<ul class="list-group" ng-repeat ="friend in friend_list">
-       <a href="#chat"> <li class="list-group-item"><span class="badge">{{friend.status}}</span>{{friend.name}}</li>	 </a> 
-    </ul>    
-  </div>
-  <div class="col-sm-8">
-<h1>Friend's Locations</h1>
-<div id="map"></div>
-    <script>
+            <ul class="list-group" ng-repeat="friend in friend_list">
+                <a href="#chat/">
+                    <li class="list-group-item">
+                        <span class="badge">{{friend.status}}</span>
+                        {{friend.name}}
+                    </li>
+                </a>
 
-var map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
-  });
-}
+            </ul>
+        </div>
+        <div class="col-sm-8">
+            <h1>Friend's Locations</h1>
 
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3xxSRy0J2M220WHuEDCh2554JXJuyGps&callback=initMap"
-        async defer></script>
-  	
-  </div>
+            <div id="chart-8" style="height: 350px;"></div>
+            <script>
+                new Chartkick.GeoChart("chart-8", [["United States", 44], ["Germany", 23], ["Brazil", 22], ["Canada", 21], ["France", 13], ['Srilanka', 70]]);
+            </script>
+        </div>
+    </div>
 </div>

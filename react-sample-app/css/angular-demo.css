@@ -151,10 +151,10 @@ p {
 }
 
 #page-wrapper {
-    width: 50%;
+    width: 40%;
     padding: 0;
     background-color: #fff;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 .huge {
@@ -375,7 +375,7 @@ ul.alert-dropdown {
     box-shadow: 3px 3px 4px #c7c7c7;
 }
 
-.slider-item-body{
+.slider-item-body {
     border-radius: 0px;
     text-align: center;
     padding: 15px;
@@ -473,7 +473,7 @@ span.star.filled:before {
 }
 
 /* slide show */
-.item{
+.item {
     background: #FFF;
     text-align: center;
     height: 300px !important;
@@ -487,60 +487,66 @@ span.star.filled:before {
 
 .back-footer-green {
     background-color: #352b40;
-    color:#fff;
+    color: #fff;
     border-top: 0px solid #fff;
 }
 
 .no-boder {
-    border:1px solid #f3f3f3;
+    border: 1px solid #f3f3f3;
     border-radius: 0px;
 }
-.no-border-footer{
+
+.no-border-footer {
     border-radius: 0px;
 }
 
 .bg-color-red {
     background-color: #fff;
-    color:#F0433D;
+    color: #F0433D;
 }
+
 .back-footer-red {
     background-color: #F0433D;
-    color:#fff;
+    color: #fff;
     border-top: 0px solid #fff;
 }
 
 .bg-color-brown {
     background-color: #fff;
-    color:#E87E04;
+    color: #E87E04;
 }
+
 .back-footer-brown {
     background-color: #E87E04;
-    color:#fff;
+    color: #fff;
     border-top: 0px solid #fff;
 }
+
 .bg-color-blue {
     background-color: #fff;
     color: #4183D7;
 }
+
 .back-footer-blue {
     background-color: #4183D7;
-    color:#fff;
+    color: #fff;
     border-top: 0px solid #fff;
 }
 
 /* campaigns */
 
-table#sourceTable tbody  tr {
-    cursor : pointer;
+table#sourceTable tbody tr {
+    cursor: pointer;
 }
 
 /* Register */
 #register-page-wrapper {
-    width: 50%;
+    width: 40%;
     padding: 0;
     background-color: #fff;
-    margin:0 auto;
+    margin: 0 auto;
 }
+
 /* Google Map */
 #map {
     height: 500px;
@@ -548,38 +554,39 @@ table#sourceTable tbody  tr {
 }
 
 /* chat App*/
-.chat
-{
+.chat {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.chat li
-{
+.chat li {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.chat li.left .chat-body
-{
+.chat li.left .chat-body {
     margin-left: 60px;
 }
 
-.chat li.right .chat-body
-{
+.chat li.right .chat-body {
     margin-right: 60px;
 }
 
-
-.chat li .chat-body p
-{
+.chat li .chat-body p {
     margin: 0;
     color: #777777;
 }
 
-.panel .slidedown .glyphicon, .chat .glyphicon
-{
+.panel .slidedown .glyphicon, .chat .glyphicon {
     margin-right: 5px;
+}
+
+/* Login */
+#login-page-wrapper {
+    width: 40%;
+    padding: 0;
+    background-color: #fff;
+    margin: 0 auto;
 }
