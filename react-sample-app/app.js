@@ -19,6 +19,10 @@ sampleApp.config(['$routeProvider',
                 templateUrl: 'pages/chat.html',
                 controller: 'ChatController'
             }).
+            when('/rules', {
+                templateUrl: 'pages/ruleBlocks.html',
+                controller: 'RuleController'
+            }).
             when('/products', {
                 templateUrl: 'pages/products.html',
                 controller: 'ProductsController'
@@ -104,6 +108,39 @@ sampleApp.controller('LoginController', function ($scope, $http, $location, loca
 });
 sampleApp.controller('RegisterController', function ($scope) {
     $scope.message = 'This is Show orders screen';
+});
+
+sampleApp.controller('RuleController', function ($scope) {
+    console.log("Initial load Rules")
+    $scope.rules = [{}];
+    $scope.ruleFullBlock = [{}];
+
+    $scope.addRuleBlock = function () {
+        var newRule = $scope.rules.length + 1;
+        $scope.rules.push(
+            {'id': 'choice' + newRule}
+        );
+    };
+
+    $scope.addFullRuleBlock = function () {
+        console.log("------ Add Rule Block------")
+        var newRule = $scope.ruleFullBlock.length + 1;
+        $scope.ruleFullBlock.push(
+            {'id': 'choice' + newRule}
+        );
+    };
+
+    $scope.removeFullRuleBlock = function () {
+        console.log("------ Remove Rule Block------")
+        var removeItem = $scope.ruleFullBlock.length - 1;
+        $scope.rules.splice(removeItem);
+    };
+
+    $scope.removeRuleBlock = function () {
+        var removeItem = $scope.rules.length - 1;
+        $scope.rules.splice(removeItem);
+    };
+
 });
 
 sampleApp.controller('ProductsController', function ($scope, $http) {

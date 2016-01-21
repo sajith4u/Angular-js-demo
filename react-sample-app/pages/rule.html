@@ -1,0 +1,60 @@
+<div ng-app="sampleApp" ng-controller="RuleController">
+    <div class="row">
+        <div class="col-sm-3" style="background-color:lavender;">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle"
+                        type="button"
+                        id="dropdownMenu1"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="true">
+                    Events
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li>Payments Events</li>
+                    <li>App Downloads</li>
+                    <li>App Subscription</li>
+                    <li role="separator" class="divider"></li>
+                    <li>Green Profile</li>
+                    <li>Gold Profile</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3" style="background-color:lavenderblush;">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    Aggregation Type
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li>Total Amount</li>
+                    <li>Total Count</li>
+                    <li>First Time</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3" style="background-color:lavender;">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                Conditions
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li>Less_than</li>
+                <li>grater_than</li>
+                <li>Equals</li>
+            </ul>
+        </div>
+        <div class="col-sm-3" style="background-color:lavender;">
+            <div class="row">
+                <div class="col-sm-6" style="background-color:lavender;">
+                    <input type="text" class="form-control" id="value">
+                </div>
+                <div class="col-sm-6" style="background-color:lavender;">
+                    <button type="button" class="btn btn-default" ng-click="addRuleBlock()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
