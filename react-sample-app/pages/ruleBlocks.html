@@ -1,74 +1,63 @@
 <div ng-app="sampleApp" ng-controller="RuleController">
     <div style="margin: 5%">
         <fieldset data-ng-repeat="ruleBlock in ruleFullBlock">
+
             <div class="panel panel-default">
                 <div class="panel-heading" style="height: 50px">
                     <h3 class="panel-title pull-left" style="width: 50%">Rule Block</h3>
 
-                    <button id="addRuleBlock" type="button" class="btn btn-default pull-right"
+                    <button id="addRuleBlock" type="button"
+                            class="btn btn-default pull-right"
+                            ng-show="$last"
                             ng-click="addFullRuleBlock()">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
-                    <button type="button" class="btn btn-default pull-right" ng-click="removeFullRuleBlock()">
+                    <button type="button" class="btn btn-default pull-right"
+                            ng-click="removeFullRuleBlock(ruleBlock.id)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
                 <div class="panel-body">
                     <fieldset data-ng-repeat="rule in rules">
 
-                        <div class="row">
-                            <div class="col-sm-3" style="background-color:lavender;">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle"
-                                            type="button"
-                                            id="dropdownMenu1"
-                                            data-toggle="dropdown"
-                                            aria-haspopup="true"
-                                            aria-expanded="true">
-                                        Events
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" ng-model="rule.eventType">
-                                        <li><a href="">Payments Events</a></li>
-                                        <li><a href="">App Downloads</a></li>
-                                        <li><a href="">App Subscription</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="">Green Profile</a></li>
-                                        <li><a href="">Gold Profile</a></li>
-                                    </ul>
-                                </div>
+                        <div class="row" style="margin: 2px">
+                            <div class="col-sm-3">
+                                <select ng-model="rule.eventType"
+                                        ng-options="eventType.name as eventType.name for eventType in eventTypes"
+                                        class="selectpicker show-tick form-control">
+
+                                </select>
                             </div>
-                            <div class="col-sm-3" style="background-color:lavenderblush;">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button"
-                                            data-toggle="dropdown">
-                                        Aggregation Type
-                                        <span class="caret"></span></button>
-                                    <ul class="dropdown-menu" ng-model="rule.aggregationType">
-                                        <li><a href="">Total Amount</a></li>
-                                        <li><a href="">Total Count</a></li>
-                                        <li><a href="">First Time</a></li>
-                                    </ul>
-                                </div>
+                            <div class="col-sm-3">
+                                <select ng-model="rule.aggregationType"
+                                        ng-options="aggregation.name as aggregation.name for aggregation in aggregationTypes"
+                                        class="selectpicker show-tick form-control">
+
+                                </select>
+
                             </div>
-                            <div class="col-sm-3" style="background-color:lavender;">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Conditions
-                                    <span class="caret"></span></button>
-                                <ul class="dropdown-menu" ng-model="rule.conditionType">
-                                    <li><a href="">Less_than</a></li>
-                                    <li><a href="">grater_than</a></li>
-                                    <li><a href="">Equals</a></li>
-                                </ul>
+                            <div class="col-sm-3">
+                                <select ng-model="rule.condition"
+                                        ng-options="condition.name as condition.name for condition in conditions"
+                                        class="selectpicker show-tick form-control">
+
+                                </select>
                             </div>
-                            <div class="col-sm-3" style="background-color:lavender;">
+                            <div class="col-sm-3">
                                 <div class="row">
-                                    <div class="col-sm-6" style="background-color:lavender;">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" id="value" ng-model="rule.value">
                                     </div>
-                                    <div class="col-sm-6" style="background-color:lavender;">
-                                        <button type="button" class="btn btn-default" ng-click="addRuleBlock()">
+                                    <div class="col-sm-6">
+                                        <button type="button"
+                                                class="btn btn-default"
+                                                ng-show="$last"
+                                                ng-click="addRuleBlock()">
                                             <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default"
+                                                ng-click="removeRuleBlock(rule.id)">
+                                            <span class="glyphicon glyphicon-minus"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -80,5 +69,16 @@
                 </div>
             </div>
         </fieldset>
+
+        <div id="choicesDisplay">
+            {{ rules }}
+        </div>
+        <div style="margin-top: 10px">
+            <button type="button" class="btn btn-primary btn-lg"
+                    ng-click="">
+                <span class="glyphicon glyphicon-floppy-save"></span>
+            </button>
+        </div>
+
     </div>
 </div>

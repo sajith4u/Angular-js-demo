@@ -111,35 +111,86 @@ sampleApp.controller('RegisterController', function ($scope) {
 });
 
 sampleApp.controller('RuleController', function ($scope) {
-    console.log("Initial load Rules")
-    $scope.rules = [{}];
-    $scope.ruleFullBlock = [{}];
+
+    $scope.eventTypes = [{
+        id: 1,
+        name: "Payments Events"
+    }, {
+        id: 2,
+        name: "App Downloads"
+    }, {
+        id: 3,
+        name: "App Subscription"
+    }];
+
+    $scope.profiles = [{
+        id: 1,
+        name: "Green Profile"
+    }, {
+        id: 2,
+        name: "Gold Profile"
+    }];
+
+    $scope.aggregationTypes = [{
+        id: 1,
+        name: "Total Amount"
+    }, {
+        id: 2,
+        name: "Total Count"
+    }, {
+        id: 3,
+        name: "First Time"
+    }];
+
+    $scope.conditions = [{
+        id: 1,
+        name: "Less_than"
+    }, {
+        id: 2,
+        name: "grater_than"
+    }, {
+        id: 3,
+        name: "Equals"
+    }];
+
+    $scope.conditionBlock = [];
+
+    $scope.cars = [
+        {name:'Nissan', guid:'1-9'},
+        {name:'Toyota', guid:'1-23'},
+        {name:'Ford', guid:'8-43'},
+        {name:'Honda', guid:'2-6'},
+        {name:'Datsun', guid:'1-55'}
+    ];
+    $scope.selectedCar = $scope.cars[1].guid;
+
+    $scope.rules = [{id: 1}];
 
     $scope.addRuleBlock = function () {
         var newRule = $scope.rules.length + 1;
-        $scope.rules.push(
-            {'id': 'choice' + newRule}
-        );
+        $scope.rules.push({id: newRule});
     };
 
+    $scope.removeRuleBlock = function (blockNumber) {
+        $scope.rules.splice(blockNumber - 1, 1);
+    };
+
+    $scope.updateCondition = function (blockNumber, value) {
+        console.log("BlockNumber {}, and Value {}", blockNumber, value);
+
+    };
+
+    $scope.ruleFullBlock = [{id: 1}];
     $scope.addFullRuleBlock = function () {
-        console.log("------ Add Rule Block------")
         var newRule = $scope.ruleFullBlock.length + 1;
-        $scope.ruleFullBlock.push(
-            {'id': 'choice' + newRule}
-        );
+        $scope.ruleFullBlock.push(newRule);
     };
 
-    $scope.removeFullRuleBlock = function () {
-        console.log("------ Remove Rule Block------")
+    $scope.removeFullRuleBlock = function (blockNumber) {
         var removeItem = $scope.ruleFullBlock.length - 1;
-        $scope.rules.splice(removeItem);
+        $scope.ruleFullBlock.splice(blockNumber - 1, 1);
     };
 
-    $scope.removeRuleBlock = function () {
-        var removeItem = $scope.rules.length - 1;
-        $scope.rules.splice(removeItem);
-    };
 
 });
 
