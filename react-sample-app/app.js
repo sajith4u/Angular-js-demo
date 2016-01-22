@@ -121,13 +121,11 @@ sampleApp.controller('RuleController', function ($scope) {
     }, {
         id: 3,
         name: "App Subscription"
-    }];
-
-    $scope.profiles = [{
-        id: 1,
+    }, {
+        id: 4,
         name: "Green Profile"
     }, {
-        id: 2,
+        id: 5,
         name: "Gold Profile"
     }];
 
@@ -155,16 +153,84 @@ sampleApp.controller('RuleController', function ($scope) {
 
     $scope.conditionBlock = [];
 
-    $scope.cars = [
-        {name:'Nissan', guid:'1-9'},
-        {name:'Toyota', guid:'1-23'},
-        {name:'Ford', guid:'8-43'},
-        {name:'Honda', guid:'2-6'},
-        {name:'Datsun', guid:'1-55'}
-    ];
-    $scope.selectedCar = $scope.cars[1].guid;
+    var equalBlockTemplate = {
+        "EQ": {
+            "RHS": {}
+        }
+    };
+
+    var graterThanBlockTemplate = {
+        "GT": {
+            "RHS": {}
+        }
+    };
+
+    var lessThanBlockTemplate = {
+        "LT": {
+            "RHS": {}
+        }
+    };
+
+    var applyBlockTemplate = {
+        "APPLY": {
+            "type": {}
+        }
+    };
+
+    var inBlockTemplate = {
+        "IN": {}
+    };
 
     $scope.rules = [{id: 1}];
+    $scope.logs = [];
+
+    $scope.download = function () {
+        console.log("Length : " + $scope.rules.length);
+        angular.forEach($scope.rules, function (item) {
+            var condition = item.condition;
+            var eventType = item.eventType;
+            var aggregationType = item.aggregationType;
+            var value = item.value;
+            var id = item.id;
+            console.log("Id :" + id)
+            var finalObj;
+            inBlockTemplate.IN.type = "BasicEvent";
+            inBlockTemplate.IN.out = aggregationType;
+            inBlockTemplate.IN.refId = 8;
+
+            if (condition == "Equals") {
+                equalBlockTemplate.EQ.RHS.value = value;
+                equalBlockTemplate.EQ.RHS.unit = "int";
+                finalObj = $.extend(true, {}, inBlockTemplate, equalBlockTemplate);
+                console.log("Result 1 : " + finalObj.EQ.RHS.value)
+            } else if (condition == "grater_than") {
+                graterThanBlockTemplate.GT.RHS.value = value;
+                graterThanBlockTemplate.GT.RHS.unit = "int";
+                finalObj = $.extend(true, {}, inBlockTemplate, graterThanBlockTemplate);
+                console.log("Result 2 : " + finalObj.GT.RHS.value)
+            } else {
+                lessThanBlockTemplate.LT.RHS.value = value;
+                lessThanBlockTemplate.LT.RHS.unit = "int";
+                finalObj = $.extend(true, {}, inBlockTemplate, lessThanBlockTemplate);
+                console.log("Result 3 : " + finalObj.LT.RHS.value)
+            }
+            var json = {
+                "IN": {
+                    "type": "eventType",
+                    "out": aggregationType,
+                    "refId": 8
+                },
+                "GT": {
+                    "RHS": {
+                        "value": value,
+                        "unit": "int"
+                    }
+                }
+            };
+
+            $scope.logs.push(finalObj);
+        });
+    }
 
     $scope.addRuleBlock = function () {
         var newRule = $scope.rules.length + 1;
@@ -175,11 +241,8 @@ sampleApp.controller('RuleController', function ($scope) {
         $scope.rules.splice(blockNumber - 1, 1);
     };
 
-    $scope.updateCondition = function (blockNumber, value) {
-        console.log("BlockNumber {}, and Value {}", blockNumber, value);
 
-    };
-
+// Full Rule Block
     $scope.ruleFullBlock = [{id: 1}];
     $scope.addFullRuleBlock = function () {
         var newRule = $scope.ruleFullBlock.length + 1;
@@ -191,8 +254,8 @@ sampleApp.controller('RuleController', function ($scope) {
         $scope.ruleFullBlock.splice(blockNumber - 1, 1);
     };
 
-
-});
+})
+;
 
 sampleApp.controller('ProductsController', function ($scope, $http) {
     var URL = "http://localhost:9090/api/products";

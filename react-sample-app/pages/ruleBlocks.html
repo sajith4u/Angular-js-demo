@@ -4,7 +4,12 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading" style="height: 50px">
-                    <h3 class="panel-title pull-left" style="width: 50%">Rule Block</h3>
+                    <h3 class="panel-title pull-left" style="width: 8%">Rule Block</h3>
+                    <select id="basic" class="pull-left" style="width: 5%">
+                        <option>ALL</option>
+                        <option>NOT</option>
+                        <option>OR</option>
+                    </select>
 
                     <button id="addRuleBlock" type="button"
                             class="btn btn-default pull-right"
@@ -25,7 +30,6 @@
                                 <select ng-model="rule.eventType"
                                         ng-options="eventType.name as eventType.name for eventType in eventTypes"
                                         class="selectpicker show-tick form-control">
-
                                 </select>
                             </div>
                             <div class="col-sm-3">
@@ -73,11 +77,25 @@
         <div id="choicesDisplay">
             {{ rules }}
         </div>
+
+        <div id="updatedBlog">
+            {{ logs }}
+        </div>
         <div style="margin-top: 10px">
-            <button type="button" class="btn btn-primary btn-lg"
-                    ng-click="">
-                <span class="glyphicon glyphicon-floppy-save"></span>
-            </button>
+            <div class="row" style="width: 20%">
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-default btn-lg"
+                            ng-click="download()">
+                        <span class="glyphicon glyphicon-floppy-save"></span>
+                    </button>
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-default btn-lg"
+                            ng-click="">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
         </div>
 
     </div>
