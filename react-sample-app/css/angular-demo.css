@@ -600,8 +600,9 @@ table#sourceTable tbody tr {
 }
 
 #updatedBlog {
+    margin-top: 15px;
     padding: 10px;
-    background: rgb(227, 250, 227);
-    border: 1px solid rgb(171, 239, 171);
-    color: rgb(9, 56, 9);
+    background: rgb(250, 245, 227);
+    border: 1px solid rgb(239, 155, 124);
+    color: rgb(56, 28, 19);
 }

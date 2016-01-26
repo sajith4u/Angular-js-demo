@@ -138,6 +138,40 @@ sampleApp.controller('RuleController', function ($scope) {
     }, {
         id: 3,
         name: "First Time"
+    }, {
+        id: 4,
+        name: " Night-Time-calls (filter)"
+    }, {
+        id: 5,
+        name: " Pizza_lovers (Alias)"
+    }, {
+        id: 4,
+        name: "IN"
+    }, {
+        id: 5,
+        name: "NOT_IN"
+    }];
+
+    $scope.basicAggregationTypes = [{
+        id: 1,
+        name: "Total Amount"
+    }, {
+        id: 2,
+        name: "Total Count"
+    }, {
+        id: 3,
+        name: "First Time"
+    }];
+
+    $scope.subAliasTypes = [{
+        id: 1,
+        name: "High"
+    }, {
+        id: 2,
+        name: "Medium"
+    }, {
+        id: 3,
+        name: "Low"
     }];
 
     $scope.conditions = [{
@@ -150,6 +184,18 @@ sampleApp.controller('RuleController', function ($scope) {
         id: 3,
         name: "Equals"
     }];
+
+    $scope.subProfiles = [{
+        id: 1,
+        name: "subProfile1"
+    }, {
+        id: 2,
+        name: "subProfile2"
+    }, {
+        id: 3,
+        name: "subProfile3"
+    }];
+
 
     $scope.conditionBlock = [];
 
@@ -172,68 +218,139 @@ sampleApp.controller('RuleController', function ($scope) {
     };
 
     var applyBlockTemplate = {
-        "APPLY": {
-            "type": {}
-        }
+        "APPLY": {}
     };
 
     var inBlockTemplate = {
         "IN": {}
     };
 
+    var profileInBlockTemplate = {
+        "IN": {}
+    };
+
+    var notInBlockTemplate = {
+        "NOT_IN": {}
+    };
+
     $scope.rules = [{id: 1}];
-    $scope.logs = [];
+    /**
+     *  This method Show the manipulated json schema.
+     */
+    $scope.showJson = function (value) {
+        $scope.logs = [];
+        if (value == 'show') {
+            if ($scope.rules.length >= 1) {
+                angular.forEach($scope.rules, function (item) {
+                    var condition = item.condition;
+                    var eventType = item.eventType;
+                    var aggregationType = item.aggregationType;
+                    var value = item.value;
+                    var id = item.id;
+                    var finalObj;
 
-    $scope.download = function () {
-        console.log("Length : " + $scope.rules.length);
-        angular.forEach($scope.rules, function (item) {
-            var condition = item.condition;
-            var eventType = item.eventType;
-            var aggregationType = item.aggregationType;
-            var value = item.value;
-            var id = item.id;
-            console.log("Id :" + id)
-            var finalObj;
-            inBlockTemplate.IN.type = "BasicEvent";
-            inBlockTemplate.IN.out = aggregationType;
-            inBlockTemplate.IN.refId = 8;
+                    if (eventType.indexOf("Profile") != -1) {
+                        if (aggregationType == "IN") {
+                            profileInBlockTemplate.IN.type = "Profile";
+                            profileInBlockTemplate.IN.profileId = 7586;
+                            profileInBlockTemplate.IN.subProfileId = 7852;
+                            finalObj = profileInBlockTemplate;
+                        } else if (aggregationType == "NOT_IN") {
+                            notInBlockTemplate.NOT_IN.type = "Profile";
+                            notInBlockTemplate.NOT_IN.profileId = 7586;
+                            notInBlockTemplate.NOT_IN.subProfileId = 7852;
+                            finalObj = notInBlockTemplate;
+                        }
 
-            if (condition == "Equals") {
-                equalBlockTemplate.EQ.RHS.value = value;
-                equalBlockTemplate.EQ.RHS.unit = "int";
-                finalObj = $.extend(true, {}, inBlockTemplate, equalBlockTemplate);
-                console.log("Result 1 : " + finalObj.EQ.RHS.value)
-            } else if (condition == "grater_than") {
-                graterThanBlockTemplate.GT.RHS.value = value;
-                graterThanBlockTemplate.GT.RHS.unit = "int";
-                finalObj = $.extend(true, {}, inBlockTemplate, graterThanBlockTemplate);
-                console.log("Result 2 : " + finalObj.GT.RHS.value)
-            } else {
-                lessThanBlockTemplate.LT.RHS.value = value;
-                lessThanBlockTemplate.LT.RHS.unit = "int";
-                finalObj = $.extend(true, {}, inBlockTemplate, lessThanBlockTemplate);
-                console.log("Result 3 : " + finalObj.LT.RHS.value)
-            }
-            var json = {
-                "IN": {
-                    "type": "eventType",
-                    "out": aggregationType,
-                    "refId": 8
-                },
-                "GT": {
-                    "RHS": {
-                        "value": value,
-                        "unit": "int"
+                    } else {
+                        console.log("This is Not Profile")
+                        inBlockTemplate.IN.type = "BasicEvent";
+                        inBlockTemplate.IN.out = aggregationType;
+                        inBlockTemplate.IN.refId = 8;
+                        if (aggregationType.indexOf("filter") != -1) {
+                            applyBlockTemplate.APPLY.type = "Filter";
+                            applyBlockTemplate.APPLY.eventId = 8;
+                            applyBlockTemplate.APPLY.refId = 145;
+                            applyBlockTemplate.APPLY.out = "total Count";
+                            if (condition == "Equals") {
+                                equalBlockTemplate.EQ.RHS.value = value;
+                                equalBlockTemplate.EQ.RHS.unit = "int";
+                                finalObj = $.extend(true, {}, applyBlockTemplate, equalBlockTemplate);
+                            } else if (condition == "grater_than") {
+                                graterThanBlockTemplate.GT.RHS.value = value;
+                                graterThanBlockTemplate.GT.RHS.unit = "int";
+                                finalObj = $.extend(true, {}, applyBlockTemplate, graterThanBlockTemplate);
+                            } else {
+                                lessThanBlockTemplate.LT.RHS.value = value;
+                                lessThanBlockTemplate.LT.RHS.unit = "int";
+                                finalObj = $.extend(true, {}, applyBlockTemplate, lessThanBlockTemplate);
+                            }
+
+                        } else {
+                            if (condition == "Equals") {
+                                equalBlockTemplate.EQ.RHS.value = value;
+                                equalBlockTemplate.EQ.RHS.unit = "int";
+                                finalObj = $.extend(true, {}, inBlockTemplate, equalBlockTemplate);
+                            } else if (condition == "grater_than") {
+                                graterThanBlockTemplate.GT.RHS.value = value;
+                                graterThanBlockTemplate.GT.RHS.unit = "int";
+                                finalObj = $.extend(true, {}, inBlockTemplate, graterThanBlockTemplate);
+                            } else {
+                                lessThanBlockTemplate.LT.RHS.value = value;
+                                lessThanBlockTemplate.LT.RHS.unit = "int";
+                                finalObj = $.extend(true, {}, inBlockTemplate, lessThanBlockTemplate);
+                            }
+                        }
+
                     }
-                }
-            };
 
-            $scope.logs.push(finalObj);
-        });
+
+                    $scope.logs.push(finalObj);
+                });
+            } else {
+                $scope.logs.push("Empty Rules");
+            }
+        } else {
+            $scope.logs.push();
+        }
     }
 
+    $scope.$watchCollection('rules', function handleRuleChange(newNames, oldNames) {
+
+    }, true);
+
+    $scope.eventTypeChange = function (blockNumber) {
+        console.log("Event Type chnage Called {}", blockNumber);
+        var eventType = $scope.rules[blockNumber - 1].eventType;
+        if (eventType.indexOf("Profile") != -1) {
+            if ($scope.aggregationTypes.length < 6) {
+                console.log("called")
+                var inBlock = {
+                    id: 6,
+                    name: "IN"
+                };
+                var notIn = {
+                    id: 7,
+                    name: "NOT_IN"
+                };
+                $scope.aggregationTypes.push(inBlock);
+                $scope.aggregationTypes.push(notIn);
+
+            }
+
+            console.log("Profile OK")
+
+        } else {
+
+        }
+
+    }
+    /**
+     *  This Function Add Rule Block(Condition Block)
+     */
     $scope.addRuleBlock = function () {
         var newRule = $scope.rules.length + 1;
+        this.showJson('show');
         $scope.rules.push({id: newRule});
     };
 
@@ -242,20 +359,26 @@ sampleApp.controller('RuleController', function ($scope) {
     };
 
 
-// Full Rule Block
+    /**
+     *  Add Full Rule Block (Logic Block)
+     * @type {{id: number}[]}
+     */
     $scope.ruleFullBlock = [{id: 1}];
     $scope.addFullRuleBlock = function () {
         var newRule = $scope.ruleFullBlock.length + 1;
-        $scope.ruleFullBlock.push(newRule);
+        $scope.ruleFullBlock.push({id: newRule});
     };
 
+    /**
+     *  Remove Parent Rule Block
+     * @param blockNumber
+     */
     $scope.removeFullRuleBlock = function (blockNumber) {
         var removeItem = $scope.ruleFullBlock.length - 1;
         $scope.ruleFullBlock.splice(blockNumber - 1, 1);
     };
 
-})
-;
+});
 
 sampleApp.controller('ProductsController', function ($scope, $http) {
     var URL = "http://localhost:9090/api/products";

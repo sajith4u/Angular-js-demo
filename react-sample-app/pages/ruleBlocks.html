@@ -5,8 +5,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading" style="height: 50px">
                     <h3 class="panel-title pull-left" style="width: 8%">Rule Block</h3>
-                    <select id="basic" class="pull-left" style="width: 5%">
-                        <option>ALL</option>
+
+                    <select id="type" class="pull-left" style="width: 5%">
+                        <option selected>ALL</option>
                         <option>NOT</option>
                         <option>OR</option>
                     </select>
@@ -29,9 +30,11 @@
                             <div class="col-sm-3">
                                 <select ng-model="rule.eventType"
                                         ng-options="eventType.name as eventType.name for eventType in eventTypes"
-                                        class="selectpicker show-tick form-control">
+                                        class="selectpicker show-tick form-control"
+                                        id="eventTypes">
                                 </select>
                             </div>
+
                             <div class="col-sm-3">
                                 <select ng-model="rule.aggregationType"
                                         ng-options="aggregation.name as aggregation.name for aggregation in aggregationTypes"
@@ -79,20 +82,22 @@
         </div>
 
         <div id="updatedBlog">
-            {{ logs }}
+            <pre> {{logs | json}}</pre>
         </div>
+
         <div style="margin-top: 10px">
-            <div class="row" style="width: 20%">
+            <div class="row" style="width: 30%">
                 <div class="col-sm-6">
-                    <button type="button" class="btn btn-default btn-lg"
-                            ng-click="download()">
-                        <span class="glyphicon glyphicon-floppy-save"></span>
+                    <button type="button" class="btn btn-default"
+                            ng-click="showJson('show')">
+                        Show JSON
                     </button>
+
                 </div>
                 <div class="col-sm-6">
-                    <button type="button" class="btn btn-default btn-lg"
-                            ng-click="">
-                        <span class="glyphicon glyphicon-remove"></span>
+                    <button type="button" class="btn btn-default"
+                            ng-click="showJson('clean')">
+                        Clear
                     </button>
                 </div>
             </div>
