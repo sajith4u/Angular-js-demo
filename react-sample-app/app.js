@@ -183,6 +183,12 @@ sampleApp.controller('RuleController', function ($scope) {
     }, {
         id: 3,
         name: "Equals"
+    }, {
+        id: 4,
+        name: "subProfile"
+    }, {
+        id: 5,
+        name: "subProfile2"
     }];
 
     $scope.subProfiles = [{
@@ -201,19 +207,19 @@ sampleApp.controller('RuleController', function ($scope) {
 
     var equalBlockTemplate = {
         "EQ": {
-            "RHS": {}
+            "RHS": {}, "LHS": {}
         }
     };
 
     var graterThanBlockTemplate = {
         "GT": {
-            "RHS": {}
+            "RHS": {}, "LHS": {}
         }
     };
 
     var lessThanBlockTemplate = {
         "LT": {
-            "RHS": {}
+            "RHS": {}, "LHS": {}
         }
     };
 
@@ -221,8 +227,14 @@ sampleApp.controller('RuleController', function ($scope) {
         "APPLY": {}
     };
 
+    var applyBlockTemplateForAlias = {
+        "APPLY": {}
+    };
+
     var inBlockTemplate = {
-        "IN": {}
+        "IN": {
+            "AND": []
+        }
     };
 
     var profileInBlockTemplate = {
@@ -233,84 +245,174 @@ sampleApp.controller('RuleController', function ($scope) {
         "NOT_IN": {}
     };
 
+
     $scope.rules = [{id: 1}];
     /**
-     *  This method Show the manipulated json schema.
+     * This Method Called When Show Json Button Called
+     * @param value
      */
     $scope.showJson = function (value) {
+        $scope.anConditionBlock = [];
+
         $scope.logs = [];
         if (value == 'show') {
             if ($scope.rules.length >= 1) {
                 angular.forEach($scope.rules, function (item) {
-                    var condition = item.condition;
-                    var eventType = item.eventType;
-                    var aggregationType = item.aggregationType;
-                    var value = item.value;
-                    var id = item.id;
-                    var finalObj;
+                        var condition = item.condition;
+                        var eventType = item.eventType;
+                        var aggregationType = item.aggregationType;
+                        var value = item.value;
+                        var id = item.id;
+                        var finalObj;
 
-                    if (eventType.indexOf("Profile") != -1) {
-                        if (aggregationType == "IN") {
-                            profileInBlockTemplate.IN.type = "Profile";
-                            profileInBlockTemplate.IN.profileId = 7586;
-                            profileInBlockTemplate.IN.subProfileId = 7852;
-                            finalObj = profileInBlockTemplate;
-                        } else if (aggregationType == "NOT_IN") {
-                            notInBlockTemplate.NOT_IN.type = "Profile";
-                            notInBlockTemplate.NOT_IN.profileId = 7586;
-                            notInBlockTemplate.NOT_IN.subProfileId = 7852;
-                            finalObj = notInBlockTemplate;
-                        }
-
-                    } else {
-                        console.log("This is Not Profile")
-                        inBlockTemplate.IN.type = "BasicEvent";
-                        inBlockTemplate.IN.out = aggregationType;
-                        inBlockTemplate.IN.refId = 8;
-                        if (aggregationType.indexOf("filter") != -1) {
-                            applyBlockTemplate.APPLY.type = "Filter";
-                            applyBlockTemplate.APPLY.eventId = 8;
-                            applyBlockTemplate.APPLY.refId = 145;
-                            applyBlockTemplate.APPLY.out = "total Count";
-                            if (condition == "Equals") {
-                                equalBlockTemplate.EQ.RHS.value = value;
-                                equalBlockTemplate.EQ.RHS.unit = "int";
-                                finalObj = $.extend(true, {}, applyBlockTemplate, equalBlockTemplate);
-                            } else if (condition == "grater_than") {
-                                graterThanBlockTemplate.GT.RHS.value = value;
-                                graterThanBlockTemplate.GT.RHS.unit = "int";
-                                finalObj = $.extend(true, {}, applyBlockTemplate, graterThanBlockTemplate);
+                        if (eventType.indexOf("Profile") != -1) {
+                            if (aggregationType == "IN") {
+                                profileInBlockTemplate.IN.type = "Profile";
+                                profileInBlockTemplate.IN.profileId = 7586;
+                                profileInBlockTemplate.IN.subProfileId = 7852;
+                                profileInBlockTemplate.IN.isImmediate = false;
+                                finalObj = profileInBlockTemplate;
+                            } else if (aggregationType == "NOT_IN") {
+                                notInBlockTemplate.NOT_IN.type = "Profile";
+                                notInBlockTemplate.NOT_IN.profileId = 7586;
+                                notInBlockTemplate.NOT_IN.subProfileId = 7852;
+                                notInBlockTemplate.NOT_IN.isImmediate = false;
+                                finalObj = notInBlockTemplate;
                             } else {
-                                lessThanBlockTemplate.LT.RHS.value = value;
-                                lessThanBlockTemplate.LT.RHS.unit = "int";
-                                finalObj = $.extend(true, {}, applyBlockTemplate, lessThanBlockTemplate);
+                                finalObj = 'Not Supported';
                             }
 
                         } else {
-                            if (condition == "Equals") {
-                                equalBlockTemplate.EQ.RHS.value = value;
-                                equalBlockTemplate.EQ.RHS.unit = "int";
-                                finalObj = $.extend(true, {}, inBlockTemplate, equalBlockTemplate);
-                            } else if (condition == "grater_than") {
-                                graterThanBlockTemplate.GT.RHS.value = value;
-                                graterThanBlockTemplate.GT.RHS.unit = "int";
-                                finalObj = $.extend(true, {}, inBlockTemplate, graterThanBlockTemplate);
+                            inBlockTemplate.IN.type = "BasicEvent";
+                            inBlockTemplate.IN.out = aggregationType;
+                            inBlockTemplate.IN.refId = 8;
+                            if (aggregationType.indexOf("filter") != -1) {
+                                applyBlockTemplate.APPLY.type = "Filter";
+                                applyBlockTemplate.APPLY.eventId = 8;
+                                applyBlockTemplate.APPLY.refId = 145;
+
+                                applyBlockTemplate.APPLY.out = {
+                                    "1": {
+                                        "type": "int",
+                                        "field": "total_count"
+                                    }
+                                };
+
+                                equalBlockTemplate.EQ.LHS.value = 1;
+                                equalBlockTemplate.EQ.LHS.type = "reference";
+                                graterThanBlockTemplate.GT.LHS.value = 1;
+                                graterThanBlockTemplate.GT.LHS.type = "reference";
+                                lessThanBlockTemplate.LT.LHS.value = 1;
+                                lessThanBlockTemplate.LT.LHS.type = "reference";
+
+                                if (condition == "Equals") {
+                                    equalBlockTemplate.EQ.RHS.value = value;
+                                    equalBlockTemplate.EQ.RHS.unit = "int";
+                                    applyBlockTemplate.APPLY.AND = [equalBlockTemplate];
+                                    finalObj = applyBlockTemplate;
+                                } else if (condition == "grater_than") {
+                                    graterThanBlockTemplate.GT.RHS.value = value;
+                                    graterThanBlockTemplate.GT.RHS.unit = "int";
+                                    applyBlockTemplate.APPLY.AND = [graterThanBlockTemplate];
+                                    finalObj = applyBlockTemplate;
+                                } else {
+                                    lessThanBlockTemplate.LT.RHS.value = value;
+                                    lessThanBlockTemplate.LT.RHS.unit = "int";
+                                    applyBlockTemplate.APPLY.AND = [lessThanBlockTemplate];
+                                    finalObj = applyBlockTemplate;
+                                }
+
+                            } else if (aggregationType.indexOf("Alias") != -1) {
+
+                                applyBlockTemplateForAlias.APPLY.type = "Alias";
+                                applyBlockTemplateForAlias.APPLY.eventId = 8;
+                                applyBlockTemplateForAlias.APPLY.aliasId = 55;
+                                applyBlockTemplateForAlias.APPLY.aliasRepresentId = 99;
+
+                                applyBlockTemplateForAlias.APPLY.out = {
+                                    "1": {
+                                        "type": "int",
+                                        "field": "total_count"
+                                    }
+                                };
+
+                                equalBlockTemplate.EQ.LHS.value = 1;
+                                equalBlockTemplate.EQ.LHS.type = "reference";
+                                graterThanBlockTemplate.GT.LHS.value = 1;
+                                graterThanBlockTemplate.GT.LHS.type = "reference";
+                                lessThanBlockTemplate.LT.LHS.value = 1;
+                                lessThanBlockTemplate.LT.LHS.type = "reference";
+
+                                if (condition == "Equals") {
+                                    equalBlockTemplate.EQ.RHS.value = value;
+                                    equalBlockTemplate.EQ.RHS.unit = "int";
+                                    applyBlockTemplateForAlias.APPLY.AND = [equalBlockTemplate];
+                                    finalObj = applyBlockTemplateForAlias;
+                                } else if (condition == "grater_than") {
+                                    graterThanBlockTemplate.GT.RHS.value = value;
+                                    graterThanBlockTemplate.GT.RHS.unit = "int";
+                                    applyBlockTemplateForAlias.APPLY.AND = [graterThanBlockTemplate];
+                                    finalObj = applyBlockTemplateForAlias;
+                                } else {
+                                    lessThanBlockTemplate.LT.RHS.value = value;
+                                    lessThanBlockTemplate.LT.RHS.unit = "int";
+                                    applyBlockTemplateForAlias.APPLY.AND = [lessThanBlockTemplate];
+                                    finalObj = applyBlockTemplateForAlias;
+                                }
+
                             } else {
-                                lessThanBlockTemplate.LT.RHS.value = value;
-                                lessThanBlockTemplate.LT.RHS.unit = "int";
-                                finalObj = $.extend(true, {}, inBlockTemplate, lessThanBlockTemplate);
+                                var type = '';
+                                if (aggregationType == 'First Time') {
+                                    type = "date";
+                                } else {
+                                    type = "int";
+
+                                }
+                                inBlockTemplate.IN.out = {
+                                    "1": {
+                                        "type": type,
+                                        "field": aggregationType
+                                    }
+                                };
+
+                                equalBlockTemplate.EQ.LHS.value = 1;
+                                equalBlockTemplate.EQ.LHS.type = "reference";
+                                graterThanBlockTemplate.GT.LHS.value = 1;
+                                graterThanBlockTemplate.GT.LHS.type = "reference";
+                                lessThanBlockTemplate.LT.LHS.value = 1;
+                                lessThanBlockTemplate.LT.LHS.type = "reference";
+
+                                if (condition == "Equals") {
+                                    equalBlockTemplate.EQ.RHS.value = value;
+                                    equalBlockTemplate.EQ.RHS.unit = "int";
+                                    inBlockTemplate.IN.AND = [equalBlockTemplate];
+                                    finalObj = inBlockTemplate;
+                                } else if (condition == "grater_than") {
+                                    graterThanBlockTemplate.GT.RHS.value = value;
+                                    graterThanBlockTemplate.GT.RHS.unit = "int";
+                                    inBlockTemplate.IN.AND = [graterThanBlockTemplate];
+                                    finalObj = inBlockTemplate;
+                                } else {
+                                    lessThanBlockTemplate.LT.RHS.value = value;
+                                    lessThanBlockTemplate.LT.RHS.unit = "int";
+                                    inBlockTemplate.IN.AND = [lessThanBlockTemplate];
+                                    finalObj = inBlockTemplate;
+                                }
                             }
+
                         }
 
+
+                        $scope.logs.push(finalObj);
                     }
-
-
-                    $scope.logs.push(finalObj);
-                });
-            } else {
+                )
+                ;
+            }
+            else {
                 $scope.logs.push("Empty Rules");
             }
-        } else {
+        }
+        else {
             $scope.logs.push();
         }
     }
@@ -318,7 +420,10 @@ sampleApp.controller('RuleController', function ($scope) {
     $scope.$watchCollection('rules', function handleRuleChange(newNames, oldNames) {
 
     }, true);
-
+    /**
+     *  This Method Trigger When Event Type changes
+     * @param blockNumber
+     */
     $scope.eventTypeChange = function (blockNumber) {
         console.log("Event Type chnage Called {}", blockNumber);
         var eventType = $scope.rules[blockNumber - 1].eventType;
@@ -378,7 +483,8 @@ sampleApp.controller('RuleController', function ($scope) {
         $scope.ruleFullBlock.splice(blockNumber - 1, 1);
     };
 
-});
+})
+;
 
 sampleApp.controller('ProductsController', function ($scope, $http) {
     var URL = "http://localhost:9090/api/products";

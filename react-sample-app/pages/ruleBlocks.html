@@ -6,11 +6,14 @@
                 <div class="panel-heading" style="height: 50px">
                     <h3 class="panel-title pull-left" style="width: 8%">Rule Block</h3>
 
-                    <select id="type" class="pull-left" style="width: 5%">
+                    <select id="type" class="pull-left" style="width: 5%;margin-right: 10px">
                         <option selected>ALL</option>
                         <option>NOT</option>
                         <option>OR</option>
                     </select>
+
+                    <input type="text" class="form-control" id="profileName" ng-model="ruleBlock.name"
+                           placeholder="profile Name" style="width: 10%;margin-left: 15px;margin-right: 15px">
 
                     <button id="addRuleBlock" type="button"
                             class="btn btn-default pull-right"
