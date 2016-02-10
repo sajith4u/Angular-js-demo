@@ -27,6 +27,10 @@ sampleApp.config(['$routeProvider',
                 templateUrl: 'pages/products.html',
                 controller: 'ProductsController'
             }).
+            when('/farm', {
+                templateUrl: 'pages/productList.html',
+                controller: 'FarmAppController'
+            }).
             otherwise({
                 redirectTo: '/list'
             });
@@ -508,5 +512,9 @@ sampleApp.controller('ProductsController', function ($scope, $http) {
 sampleApp.controller('ChatController', function ($scope, $http, $location, $routeParams) {
     $scope.message = 'This is Show orders screen';
     $scope.chatterName = $routeParams.userName;
+
+});
+
+sampleApp.controller('FarmAppController', function ($scope, $http, $location, $routeParams) {
 
 });

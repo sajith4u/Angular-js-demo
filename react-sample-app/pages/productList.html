@@ -1,0 +1,13 @@
+<div id="chart" style="width:800px;height:450px;border:1px solid #A4BED4; margin-left: 5px">
+    <script type="text/javascript">
+        dhtmlxEvent(window, "load", function () {
+            var layout = new dhtmlXLayoutObject(document.body, "3L");
+            layout.cells("a").setText("Product List");
+            layout.cells("b").setText("Product Details");
+            layout.cells("c").setText("Add Product");
+            layout.cells("b").setWidth(600);
+            layout.cells("a").setWidth(200);
+            layout.cells("c").setWidth(200);
+        });
+    </script>
+</div>
